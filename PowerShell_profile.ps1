@@ -9,9 +9,8 @@ Function watch_something {
 		$scriptBlock = [scriptblock]::Create($command); 
 		$output = Invoke-Command -ScriptBlock $scriptBlock
 		Clear-Host;
-		echo $output
-		sleep 2;
-			
+		Write-Output $output
+		Start-Sleep 2;
 	} 
 }
 

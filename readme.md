@@ -1,5 +1,5 @@
 <h1 align="center">
-  Powershell Shortcuts
+  Powershell shortcuts
 </h1>
 
 <h4 align="center">
