@@ -14,5 +14,11 @@ Function watch_something {
 	} 
 }
 
+Function find_process_using_port {
+	$port = $args[0]
+	Get-Process -Id (Get-NetTCPConnection -LocalPort $port).OwningProcess
+}
+
 ## Set aliases
 Set-Alias watch watch_something 
+Set-Alias find_port find_process_using_port
