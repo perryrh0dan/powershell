@@ -19,6 +19,11 @@ Function find_process_using_port {
 	Get-Process -Id (Get-NetTCPConnection -LocalPort $port).OwningProcess
 }
 
+Function reload_path {
+	$Env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")  
+}
+
 ## Set aliases
 Set-Alias watch watch_something 
 Set-Alias find_port find_process_using_port
+Set-Alias reload reload_path

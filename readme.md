@@ -13,8 +13,14 @@ Adds some shortcuts and usefull commands to the PowerShell
 ## Contents
 
 - [Description](#description)
+- [Contents](#contents)
 - [Install](#install)
 - [Usage](#usage)
+  - [watch](#watch)
+  - [find\_port](#find_port)
+  - [reload](#reload)
+- [Team](#team)
+- [License](#license)
 
 ## Install
 
@@ -36,6 +42,14 @@ Shows the process that is listening on a given port
 
 ``` bash
 find_port <port>
+```
+
+### reload
+
+Reloads the path environment variable, so newly installed programs can be used directly
+
+``` bash
+reload
 ```
 
 ## Team
