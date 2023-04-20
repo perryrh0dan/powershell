@@ -20,10 +20,29 @@ Function find_process_using_port {
 }
 
 Function reload_path {
-	$Env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")  
+	$Env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+}
+
+Function find_git_remote_branches_with_authores {
+	$branches = (git branch -a | Select-String "remotes" | Select-String -NotMatch "HEAD|master|dev")
+
+	for($i=0; $i -lt $branches.length; $i++) {
+		$branches[$i] = $branches[$i].ToString().Trim()
+	}
+
+	foreach ($branch in $branches) {
+		$last_commit = git show $branch
+		$tempfile = "$(Split-Path $branch -Leaf)_commit.txt"
+		Add-Content $tempfile $last_commit
+
+		$author = (Get-Content $tempfile)[1]
+		Write-Host "Branch: $branch, $author"
+		Remove-Item $tempfile
+	}
 }
 
 ## Set aliases
 Set-Alias watch watch_something 
 Set-Alias find_port find_process_using_port
 Set-Alias reload reload_path
+Set-Alias git_remote_branches find_git_remote_branches_with_authores
