@@ -1,3 +1,5 @@
+. $PSScriptRoot\variables.ps1
+
 ## Declare functions
 Function watch_something { 
 	Clear-Host;
@@ -21,6 +23,7 @@ Function find_process_using_port {
 
 Function reload_path {
 	$Env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+	Write-Host "Reloaded successful" -ForegroundColor Green
 }
 
 Function find_git_remote_branches_with_authores {
@@ -41,8 +44,18 @@ Function find_git_remote_branches_with_authores {
 	}
 }
 
-## Set aliases
+Function connect_dev_server {
+	ssh $DEV_ENV
+}
+
+## Set tool aliases
 Set-Alias watch watch_something 
 Set-Alias find_port find_process_using_port
 Set-Alias reload reload_path
 Set-Alias git_remote_branches find_git_remote_branches_with_authores
+
+## Set application aliases
+Set-Alias pl passline
+
+## Set other aliases
+Set-Alias dev connect_dev_server
