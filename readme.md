@@ -19,13 +19,15 @@ Adds some shortcuts and usefull commands to the PowerShell
   - [watch](#watch)
   - [find\_port](#find_port)
   - [reload](#reload)
+  - [remote\_branches](#remote_branches)
 - [Team](#team)
 - [License](#license)
 
 ## Install
 
 1. Copy `PowerShell_profile.ps1` to your `$profile` path
-2. Reload profile with `. $profile`
+2. Create a `variables.ps1` file in the same directory
+3. Reload profile with `. $profile`
 
 ## Usage
 
@@ -51,6 +53,10 @@ Reloads the path environment variable, so newly installed programs can be used d
 ``` bash
 reload
 ```
+
+### remote_branches
+
+List all remote branches of the current git directory together with the author
 
 ## Team
 

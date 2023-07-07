@@ -26,7 +26,7 @@ Function reload_path {
 	Write-Host "Reloaded successful" -ForegroundColor Green
 }
 
-Function find_git_remote_branches_with_authores {
+Function list_remote_branches_with_authores {
 	$branches = (git branch -a | Select-String "remotes" | Select-String -NotMatch "HEAD|master|dev")
 
 	for($i=0; $i -lt $branches.length; $i++) {
@@ -52,7 +52,7 @@ Function connect_dev_server {
 Set-Alias watch watch_something 
 Set-Alias find_port find_process_using_port
 Set-Alias reload reload_path
-Set-Alias git_remote_branches find_git_remote_branches_with_authores
+Set-Alias remote_branches list_remote_branches_with_authores
 
 ## Set application aliases
 Set-Alias pl passline
