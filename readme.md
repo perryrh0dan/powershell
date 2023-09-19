@@ -20,6 +20,7 @@ Adds some shortcuts and usefull commands to the PowerShell
   - [find\_port](#find_port)
   - [reload](#reload)
   - [remote\_branches](#remote_branches)
+  - [dev](#dev)
 - [Team](#team)
 - [License](#license)
 
@@ -57,6 +58,19 @@ reload
 ### remote_branches
 
 List all remote branches of the current git directory together with the author
+
+### dev
+
+Spin up your dev environment as a docker container, either by specifying a directory via `dev .` or by specifying a docker volume name such as `dev avatar`, or by entering your `REMOTE_DEV_ENV` via the `dev` command.
+
+## Options
+
+Following variables can be set in the `variables.ps1`.
+
+| name | description | example | 
+| DOCKER_DEV_ENV | docker image to use for the dev environment | registry.tpoe.dev/dev |
+| REMOTE_DEV_ENV | comma seperated list of 'ssh connection' strings | 192.168.0.1,192.168.0.2 |
+| SSH_DIRECTORY | directory that include ssh keys to be used in the dev container | C:/Users/thomas/.ssh |
 
 ## Team
 

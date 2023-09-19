@@ -49,7 +49,7 @@ Function list_remote_branches_with_authores {
 Function dev_env {	
 	if ($args.count -ge 1) {
 		$directoryOrVolume = $args[0]
-		docker run -v ${directoryOrVolume}:/root/workspace -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -it $DOCKER_DEV_ENV /bin/zsh
+		docker run --mount type=bind,src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh
 	} else {
 		$remotes = $REMOTE_DEV_ENV.split(",")
 		foreach ($remote in $remotes) {
