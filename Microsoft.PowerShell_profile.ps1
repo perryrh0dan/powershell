@@ -24,6 +24,8 @@ Function find_process_using_port {
 Function reload_path {
 	$Env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 	Write-Host "Reloaded successful" -ForegroundColor Green
+
+	. $PROFILE
 }
 
 Function list_remote_branches_with_authores {
@@ -44,8 +46,23 @@ Function list_remote_branches_with_authores {
 	}
 }
 
-Function connect_dev_server {
-	ssh $DEV_ENV
+Function dev_env {	
+	if ($args.count -ge 1) {
+		$directoryOrVolume = $args[0]
+		docker run -v ${directoryOrVolume}:/root/workspace -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -it $DOCKER_DEV_ENV /bin/zsh
+	} else {
+		$remotes = $REMOTE_DEV_ENV.split(",")
+		foreach ($remote in $remotes) {
+			try {	
+				Write-Host "Connecting to: $remote"
+				ssh -o ConnectTimeout=5 $remote
+			}
+			catch {
+				Write-Host "Failed to connect to: $remote"
+				<#Do this if a terminating exception happens#>
+			}
+		}
+	}
 }
 
 ## Set tool aliases
@@ -58,4 +75,4 @@ Set-Alias remote_branches list_remote_branches_with_authores
 Set-Alias pl passline
 
 ## Set other aliases
-Set-Alias dev connect_dev_server
+Set-Alias dev dev_env
