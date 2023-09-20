@@ -24,9 +24,7 @@ Function find_process_using_port {
 Function reload_path {
 	$Env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 	Write-Host "Reloaded successful" -ForegroundColor Green
-
-	. $PROFILE
-}
+	}
 
 Function list_remote_branches_with_authores {
 	$branches = (git branch -a | Select-String "remotes" | Select-String -NotMatch "HEAD|master|dev")
@@ -47,9 +45,23 @@ Function list_remote_branches_with_authores {
 }
 
 Function dev_env {	
-	if ($args.count -ge 1) {
+	if ($args.count -ge 1) {	
 		$directoryOrVolume = $args[0]
-		docker run --mount type=bind,src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh
+
+		$commandOutput = docker volume ls --format "{{.Name}}"
+
+		$availableVolumes = ($commandOutput -split "/n")
+			
+		for($i=0; $i -lt $availableVolumes.length; $i++) {
+			$availableVolumes[$i] = $availableVolumes[$i].ToString().Trim()
+		}
+
+		$mountType = 'bind'
+		if ($availableVolumes -contains $directoryOrVolume) {
+			$mountType = 'volume'
+		}
+
+		docker run --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh
 	} else {
 		$remotes = $REMOTE_DEV_ENV.split(",")
 		foreach ($remote in $remotes) {
