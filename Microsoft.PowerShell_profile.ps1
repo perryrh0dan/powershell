@@ -24,7 +24,7 @@ Function find_process_using_port {
 Function reload_path {
 	$Env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 	Write-Host "Reloaded successful" -ForegroundColor Green
-	}
+}
 
 Function list_remote_branches_with_authores {
 	$branches = (git branch -a | Select-String "remotes" | Select-String -NotMatch "HEAD|master|dev")
@@ -75,6 +75,17 @@ Function dev_env {
 			}
 		}
 	}
+}
+
+Function update() {
+	# Store current directory to reset it later
+	$currentDirectory = Get-Location
+	
+	Set-Location -Path $PSScriptRoot
+
+	git pull
+
+	Set-Location -Path $currentDirectory
 }
 
 ## Set tool aliases
