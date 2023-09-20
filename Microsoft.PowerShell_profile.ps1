@@ -60,7 +60,8 @@ Function dev_env {
 		if ($availableVolumes -contains $directoryOrVolume) {
 			$mountType = 'volume'
 		}
-
+		
+		docker pull $DOCKER_DEV_ENV
 		docker run --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh
 	} else {
 		$remotes = $REMOTE_DEV_ENV.split(",")
