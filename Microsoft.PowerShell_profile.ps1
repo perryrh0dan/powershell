@@ -62,7 +62,16 @@ Function dev_env {
 		}
 		
 		docker pull $DOCKER_DEV_ENV
-		docker run --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh
+
+
+		$ports = ""
+		if ($args.count -ge 2) {
+			$prefix = "-p"
+			$mapping = $args[1].toString() + ":" + $args[1].toString()	
+			$ports = $ports + $prefix + $mapping + " " 
+		}
+
+		Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh"
 	} else {
 		$remotes = $REMOTE_DEV_ENV.split(",")
 		foreach ($remote in $remotes) {
