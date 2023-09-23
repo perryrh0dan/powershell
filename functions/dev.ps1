@@ -18,9 +18,6 @@ if ($VolumeOrDirectory) {
 	if ($availableVolumes -contains $directoryOrVolume) {
 		$mountType = 'volume'
 	}
-	
-	docker pull $DOCKER_DEV_ENV
-
 
 	$ports = ""
 	if ($Port) {
