@@ -44,49 +44,6 @@ Function list_remote_branches_with_authores {
 	}
 }
 
-Function dev_env {	
-	if ($args.count -ge 1) {	
-		$directoryOrVolume = $args[0]
-
-		$commandOutput = docker volume ls --format "{{.Name}}"
-
-		$availableVolumes = ($commandOutput -split "/n")
-			
-		for($i=0; $i -lt $availableVolumes.length; $i++) {
-			$availableVolumes[$i] = $availableVolumes[$i].ToString().Trim()
-		}
-
-		$mountType = 'bind'
-		if ($availableVolumes -contains $directoryOrVolume) {
-			$mountType = 'volume'
-		}
-		
-		docker pull $DOCKER_DEV_ENV
-
-
-		$ports = ""
-		if ($args.count -ge 2) {
-			$prefix = "-p"
-			$mapping = $args[1].toString() + ":" + $args[1].toString()	
-			$ports = $ports + $prefix + $mapping + " " 
-		}
-
-		Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh"
-	} else {
-		$remotes = $REMOTE_DEV_ENV.split(",")
-		foreach ($remote in $remotes) {
-			try {	
-				Write-Host "Connecting to: $remote"
-				ssh -o ConnectTimeout=5 $remote
-			}
-			catch {
-				Write-Host "Failed to connect to: $remote"
-				<#Do this if a terminating exception happens#>
-			}
-		}
-	}
-}
-
 Function update() {
 	# Store current directory to reset it later
 	$currentDirectory = Get-Location
@@ -108,4 +65,4 @@ Set-Alias remote_branches list_remote_branches_with_authores
 Set-Alias pl passline
 
 ## Set other aliases
-Set-Alias dev dev_env
+Set-Alias -Name dev -Value "$PSScriptRoot/functions/dev.ps1"
