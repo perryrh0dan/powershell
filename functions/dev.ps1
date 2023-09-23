@@ -29,7 +29,7 @@ if ($VolumeOrDirectory) {
 		$ports = $ports + $prefix + $mapping + " " 
 	}
 
-	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV /bin/zsh"
+	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh -it $DOCKER_DEV_ENV"
 } else {
 	$remotes = $REMOTE_DEV_ENV.split(",")
 	foreach ($remote in $remotes) {
