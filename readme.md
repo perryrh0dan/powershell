@@ -63,6 +63,12 @@ List all remote branches of the current git directory together with the author
 
 Spin up your dev environment as a docker container, either by specifying a directory via `dev .` or by specifying a docker volume name such as `dev avatar`, or by entering your `REMOTE_DEV_ENV` via the `dev` command.
 
+#### Parameters
+
+| parameter | descrption | example |
+| --------- | ---------- | ------- |
+| port      | specifiy which ports should be exposed to the host system | dev . -Port 4200 |
+
 ## Options
 
 Following variables can be set in the `variables.ps1`.
