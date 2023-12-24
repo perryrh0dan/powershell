@@ -3,6 +3,8 @@ param (
 	[string]$Port
 )
 
+. "$PSScriptRoot/config.ps1"
+
 if ($VolumeOrDirectory) {	
 	$directoryOrVolume = $VolumeOrDirectory 
 
@@ -24,12 +26,22 @@ if ($VolumeOrDirectory) {
 		$history = $directoryOrVolume + '-history'
 	}
 
+	$data = LoadConfig -Name $directoryOrVolume
+
 	$ports = ""
 	if ($Port) {
 		$prefix = "-p"
 		$mapping = $Port.toString() + ":" + $Port.toString()	
 		$ports = $ports + $prefix + $mapping + " " 
+
+		$data.port = $Port
+	} elseif ($data.port -ne "") {
+		$prefix = "-p"
+		$mapping = $data.port.toString() + ":" + $data.port.toString()	
+		$ports = $ports + $prefix + $mapping + " " 
 	}
+
+	SaveConfig -Data $data
 
 	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh  --mount type=volume,src=$history,target=/root/.history --mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock -it $DOCKER_DEV_ENV" 
 } else {
