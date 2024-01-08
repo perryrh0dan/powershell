@@ -29,13 +29,13 @@ if ($VolumeOrDirectory) {
 	$data = LoadConfig -Name $directoryOrVolume
 
 	$ports = ""
-	if ($Port) {
-		$prefix = "-p"
-		$mapping = $Port.toString() + ":" + $Port.toString()	
-		$ports = $ports + $prefix + $mapping + " " 
-
+	if ($Port -And $Port -ne "" -And $Port -ne "null") {
 		$data.port = $Port
-	} elseif ($data.port -ne "") {
+	} elseif ($Port -And $Port -eq "null") {
+        $data.port = ""
+    }
+
+    if ($data.port -ne "") {
 		$prefix = "-p"
 		$mapping = $data.port.toString() + ":" + $data.port.toString()	
 		$ports = $ports + $prefix + $mapping + " " 

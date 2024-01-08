@@ -66,9 +66,12 @@ Spin up your dev environment as a docker container, either by specifying a direc
 
 #### Parameters
 
+All parameters are persisted in `~/.environments.json' along with the environment name, and are automatically loaded when an environment is started. 
+The values are overridden and overwritten if a parameter is specified. To clear the parameters for an environment, provide the option with a value of 'null'.
+
 | parameter | descrption | example |
 | --------- | ---------- | ------- |
-| port      | specifiy which ports should be exposed to the host system | dev . -Port 4200 |
+| Port      | specifiy which port should be exposed to the host system | dev . -Port 4200 |
 
 ## Options
 
@@ -82,7 +85,7 @@ Following variables can be set in the `variables.ps1`.
 
 ## Next
 
-- [] Find a way to mount the docker credentials from the windows credentials manager into the docker container
+- [ ] Find a way to mount the docker credentials from the windows credentials manager into the docker container
 
 ## Team
 
