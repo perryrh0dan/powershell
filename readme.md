@@ -73,6 +73,10 @@ The values are overridden and overwritten if a parameter is specified. To clear 
 | --------- | ---------- | ------- |
 | Port      | specifiy which port should be exposed to the host system | dev . -Port 4200 |
 
+### update
+
+Update this repository with a git pull to keep up with the latest changes.
+
 ## Options
 
 Following variables can be set in the `variables.ps1`.

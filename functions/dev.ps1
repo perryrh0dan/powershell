@@ -43,7 +43,18 @@ if ($VolumeOrDirectory) {
 
 	SaveConfig -Data $data
 
+    # Change tab title in the new windows terminal
+    if ($mountType -eq "volume") {
+        $Host.UI.RawUI.WindowTitle = "dev ${directoryOrVolume}"
+    } else {
+        $absPath = (Join-Path $PWD $directoryOrVolume) | Resolve-Path
+        $Host.UI.RawUI.WindowTitle = "dev ${absPath}"
+    }
+
 	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace --mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh  --mount type=volume,src=$history,target=/root/.history --mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock -it $DOCKER_DEV_ENV" 
+
+    # Undo title change
+    $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
 } else {
 	$remotes = $REMOTE_DEV_ENV.split(",")
 	foreach ($remote in $remotes) {
