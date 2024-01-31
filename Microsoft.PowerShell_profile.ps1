@@ -44,6 +44,13 @@ Function list_remote_branches_with_authores {
 	}
 }
 
+Function refresh_nat() {
+    net stop winnat
+    netsh int ipv4 set dynamic tcp start=49152 num=16384
+    netsh int ipv6 set dynamic tcp start=49152 num=16384
+    net start winnat
+}
+
 Function update() {
 	# Store current directory to reset it later
 	$currentDirectory = Get-Location
@@ -60,6 +67,7 @@ Set-Alias watch watch_something
 Set-Alias find_port find_process_using_port
 Set-Alias reload reload_path
 Set-Alias remote_branches list_remote_branches_with_authores
+Set-Alias refresh_nat refresh_nat
 
 ## Set application aliases
 Set-Alias pl passline
