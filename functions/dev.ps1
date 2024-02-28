@@ -37,7 +37,7 @@ if ($VolumeOrDirectory) {
 		$data.port = $Port
 	} 
 
-    if ($data.port.Length -ge 0) {
+    if ($data.port.Length -gt 0) {
         Write-Host "Starting environment with following ports:" $data.port
 		$prefix = "-p"
         foreach ($p in $data.port) {
