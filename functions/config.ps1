@@ -53,7 +53,7 @@ Function LoadConfig {
 
     return @{
 	    name = $name
-	    port = ""
+	    port = @()
     }
 }
 

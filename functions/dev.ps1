@@ -1,6 +1,6 @@
 param (	
 	[string]$VolumeOrDirectory,
-	[string]$Port
+	[string[]]$Port
 )
 
 . "$PSScriptRoot/config.ps1"
@@ -31,16 +31,19 @@ if ($VolumeOrDirectory) {
 	$data = LoadConfig -Name $directoryOrVolume
 
 	$ports = ""
-	if ($Port -And $Port -ne "" -And $Port -ne "null") {
+    if ($Port -And $Port[0] -eq "null") {
+		$data.port = @()
+	} elseif ($Port -And $Port.Length -gt 0) {
 		$data.port = $Port
-	} elseif ($Port -And $Port -eq "null") {
-        $data.port = ""
-    }
+	} 
 
-    if ($data.port -ne "") {
+    if ($data.port.Length -ge 0) {
+        Write-Host "Starting environment with following ports:" $data.port
 		$prefix = "-p"
-		$mapping = $data.port.toString() + ":" + $data.port.toString()	
-		$ports = $ports + $prefix + $mapping + " " 
+        foreach ($p in $data.port) {
+		    $mapping = $p.toString() + ":" + $p.toString()	
+		    $ports = $ports + $prefix + $mapping + " " 
+        }
 	}
 
 	SaveConfig -Data $data
