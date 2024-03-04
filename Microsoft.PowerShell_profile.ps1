@@ -76,5 +76,6 @@ Set-Alias pl passline
 Set-Alias -Name dev -Value "$PSScriptRoot/functions/dev.ps1"
 Set-Alias -Name dev_list -Value "$PSScriptRoot/functions/dev_list.ps1"
 Set-Alias -Name dev_create -Value "$PSScriptRoot/functions/dev_create.ps1"
+Set-Alias -Name dev_stop -Value "$PSScriptRoot/functions/dev_stop.ps1"
 
 Set-Alias -Name profile -Value "$PSScriptRoot/functions/profile.ps1"
