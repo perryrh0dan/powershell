@@ -68,7 +68,7 @@ if ($VolumeOrDirectory) {
 
     $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
-    $xoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
+    $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
 
 	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $historyMount $zoxideMount $dockerMount -it $DOCKER_DEV_ENV" 
 
