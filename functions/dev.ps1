@@ -66,11 +66,16 @@ if ($VolumeOrDirectory) {
         $gpgMount = "--mount type=bind,src=$GPG_DIRECTORY/pubring.kbx,target=/root/.gnupg/pubring.kbx --mount type=bind,src=$GPG_DIRECTORY/trustdb.gpg,target=/root/.gnupg/trustdb.gpg --mount type=bind,src=$GPG_DIRECTORY/private-keys-v1.d,target=/root/.gnupg/private-keys-v1.d"
     } 
 
+    $sharedMount = ""
+    if ($SHARED_DIRECTORY) {
+        $sharedMount = "--mount type=bind,src=$SHARED_DIRECTORY,target=/root/shared"
+    }
+
     $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
 
-	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $historyMount $zoxideMount $dockerMount -it $DOCKER_DEV_ENV" 
+	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount -it $DOCKER_DEV_ENV" 
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
