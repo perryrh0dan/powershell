@@ -1,6 +1,7 @@
 param (	
 	[string]$VolumeOrDirectory,
-	[string[]]$Port
+	[string[]]$Port,
+    [string]$Tag
 )
 
 . "$PSScriptRoot/config.ps1"
@@ -30,23 +31,37 @@ if ($VolumeOrDirectory) {
 
 	$data = LoadConfig -Name $directoryOrVolume
 
-	$ports = ""
     if ($Port -And $Port[0] -eq "null") {
 		$data.port = @()
 	} elseif ($Port -And $Port.Length -gt 0) {
 		$data.port = $Port
 	} 
-
+        
+	$ports = ""
     if ($data.port.Length -gt 0) {
-        Write-Host "Starting environment with following ports:" $data.port
 		$prefix = "-p"
         foreach ($p in $data.port) {
 		    $mapping = $p.toString() + ":" + $p.toString()	
 		    $ports = $ports + $prefix + $mapping + " " 
         }
 	}
+    
+    if ($Tag) {
+        $data.tag = $Tag
+    } else {
+        $data.tag = "" 
+    }
+
+    $tag = ""
+    if ($data.tag -And $data.tag -ne "") {
+        $tag = ":$($data.tag)"
+    }
 
 	SaveConfig -Data $data
+    
+    Write-Host "Starting environment with:"
+    Write-Host "Ports: " $ports
+    Write-Host "Tag: " $tag
 
     # Change tab title in the new windows terminal
     if ($mountType -eq "volume") {
@@ -75,7 +90,7 @@ if ($VolumeOrDirectory) {
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
 
-	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount -it $DOCKER_DEV_ENV" 
+	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount -it ${DOCKER_DEV_ENV}${tag}" 
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
