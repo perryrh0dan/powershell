@@ -1,9 +1,10 @@
+$path = "~/.environments.json"
+
 Function SaveConfig {
     param (	
 	[object]$Data
     )
 
-    $path = "~/.environments.json"
     
     $jsonContent = LoadRaw 
 
@@ -40,8 +41,6 @@ Function LoadConfig {
 	[string]$Name
     )
 
-    $path = "~/.environments.json"
-
     $jsonContent = LoadRaw
     $environments = $jsonContent | ConvertFrom-Json
 
@@ -58,7 +57,7 @@ Function LoadConfig {
     }
 }
 
-Function LoadRaw {
+Function LoadRaw { 
     try {	
 	    return Get-Content -Raw -Path $path 
     }

@@ -60,8 +60,8 @@ if ($VolumeOrDirectory) {
 	SaveConfig -Data $data
     
     Write-Host "Starting environment with:"
-    Write-Host "Ports: " $ports
-    Write-Host "Tag: " $tag
+    Write-Host "Ports:" $data.port
+    Write-Host "Tag:" $data.tag
 
     # Change tab title in the new windows terminal
     if ($mountType -eq "volume") {
