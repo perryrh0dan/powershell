@@ -46,10 +46,10 @@ if ($VolumeOrDirectory) {
         }
 	}
     
-    if ($Tag) {
-        $data.tag = $Tag
-    } else {
+    if ($Tag -AND $Tag -eq "null") {
         $data.tag = "" 
+    } elseif ($Tag -And $Tag -ne "") {
+        $data.tag = $Tag
     }
 
     $tag = ""
