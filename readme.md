@@ -86,6 +86,8 @@ Following variables can be set in the `variables.ps1`.
 | DOCKER_DEV_ENV | docker image to use for the dev environment | registry.tpoe.dev/dev |
 | REMOTE_DEV_ENV | comma seperated list of 'ssh connection' strings | 192.168.0.1,192.168.0.2 |
 | SSH_DIRECTORY | directory that include ssh keys to be used in the dev container | C:/Users/thomas/.ssh |
+| GPG_DIRECTORY | directory that include gpg configurations | "C:/Users/thomas/.gnupg" |
+| SHARED_DIRECTORY | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
 | KUBE_DIRECTORY | directory that include kubectl configuration | C:/Users/thomas/.kube |
 
 ## Next
