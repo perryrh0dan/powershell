@@ -85,12 +85,18 @@ if ($VolumeOrDirectory) {
     if ($SHARED_DIRECTORY) {
         $sharedMount = "--mount type=bind,src=$SHARED_DIRECTORY,target=/root/shared"
     }
+        
+    $kubeMount = ""
+    if ($KUBE_DIRECTORY) {
+        $kubeMount = "--mount type=bind,src=$KUBE_DIRECTORY,target=/root/.kube"
+    }
+
 
     $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
 
-	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount -it ${DOCKER_DEV_ENV}${tag}" 
+	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount $kubeMount -it ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
