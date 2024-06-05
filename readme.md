@@ -12,18 +12,18 @@ Adds some shortcuts and usefull commands to the PowerShell
 
 ## Contents
 
-- [Description](#description)
-- [Contents](#contents)
-- [Install](#install)
-- [Usage](#usage)
-  - [watch](#watch)
-  - [find\_port](#find_port)
-  - [reload](#reload)
-  - [remote\_branches](#remote_branches)
-  - [dev](#dev)
-- [Next](#next)
-- [Team](#team)
-- [License](#license)
+-   [Description](#description)
+-   [Contents](#contents)
+-   [Install](#install)
+-   [Usage](#usage)
+    -   [watch](#watch)
+    -   [find_port](#find_port)
+    -   [reload](#reload)
+    -   [remote_branches](#remote_branches)
+    -   [dev](#dev)
+-   [Next](#next)
+-   [Team](#team)
+-   [License](#license)
 
 ## Install
 
@@ -35,7 +35,7 @@ Adds some shortcuts and usefull commands to the PowerShell
 
 ### watch
 
-``` bash
+```bash
 watch <command>
 watch kubectl get pods
 ```
@@ -44,7 +44,7 @@ watch kubectl get pods
 
 Shows the process that is listening on a given port
 
-``` bash
+```bash
 find_port <port>
 ```
 
@@ -52,7 +52,7 @@ find_port <port>
 
 Reloads the path environment variable, so newly installed programs can be used directly
 
-``` bash
+```bash
 reload
 ```
 
@@ -66,12 +66,13 @@ Spin up your dev environment as a docker container, either by specifying a direc
 
 #### Parameters
 
-All parameters are persisted in `~/.environments.json' along with the environment name, and are automatically loaded when an environment is started. 
+All parameters are persisted in `~/.environments.json' along with the environment name, and are automatically loaded when an environment is started.
 The values are overridden and overwritten if a parameter is specified. To clear the parameters for an environment, provide the option with a value of 'null'.
 
-| parameter | descrption | example |
-| --------- | ---------- | ------- |
-| Port      | specifiy which port should be exposed to the host system | dev . -Port 4200 |
+| parameter | descrption                                                                              | example           |
+| --------- | --------------------------------------------------------------------------------------- | ----------------- |
+| Port      | specifiy which port should be exposed to the host system                                | dev . -Port 4200  |
+| Tag       | specifiy a specific tag that should be used from the `DOCKER_DEV_ENV` default is latest | dev . -Tag golang |
 
 ### update
 
@@ -81,23 +82,23 @@ Update this repository with a git pull to keep up with the latest changes.
 
 Following variables can be set in the `variables.ps1`.
 
-| name | description | example | 
-| ---- | ----------- | ------- |
-| DOCKER_DEV_ENV | docker image to use for the dev environment | registry.tpoe.dev/dev |
-| REMOTE_DEV_ENV | comma seperated list of 'ssh connection' strings | 192.168.0.1,192.168.0.2 |
-| SSH_DIRECTORY | directory that include ssh keys to be used in the dev container | C:/Users/thomas/.ssh |
-| GPG_DIRECTORY | directory that include gpg configurations | "C:/Users/thomas/.gnupg" |
+| name             | description                                                                                                | example                  |
+| ---------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------ |
+| DOCKER_DEV_ENV   | docker image to use for the dev environment                                                                | registry.tpoe.dev/dev    |
+| REMOTE_DEV_ENV   | comma seperated list of 'ssh connection' strings                                                           | 192.168.0.1,192.168.0.2  |
+| SSH_DIRECTORY    | directory that include ssh keys to be used in the dev container                                            | C:/Users/thomas/.ssh     |
+| GPG_DIRECTORY    | directory that include gpg configurations                                                                  | "C:/Users/thomas/.gnupg" |
 | SHARED_DIRECTORY | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
-| KUBE_DIRECTORY | directory that include kubectl configuration | C:/Users/thomas/.kube |
-| NGROK_DIRECTORY | directory that include ngrok configuration | C:/Users/thomas/.ngrok |
+| KUBE_DIRECTORY   | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
+| NGROK_DIRECTORY  | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
 
 ## Next
 
-- [ ] Find a way to mount the docker credentials from the windows credentials manager into the docker container
+-   [ ] Find a way to mount the docker credentials from the windows credentials manager into the docker container
 
 ## Team
 
-- Thomas Pöhlmann [(@perryrh0dan)](https://github.com/perryrh0dan)
+-   Thomas Pöhlmann [(@perryrh0dan)](https://github.com/perryrh0dan)
 
 ## License
 
