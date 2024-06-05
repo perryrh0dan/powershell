@@ -89,6 +89,7 @@ Following variables can be set in the `variables.ps1`.
 | GPG_DIRECTORY | directory that include gpg configurations | "C:/Users/thomas/.gnupg" |
 | SHARED_DIRECTORY | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
 | KUBE_DIRECTORY | directory that include kubectl configuration | C:/Users/thomas/.kube |
+| NGROK_DIRECTORY | directory that include ngrok configuration | C:/Users/thomas/.ngrok |
 
 ## Next
 
