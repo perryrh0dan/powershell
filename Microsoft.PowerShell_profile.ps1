@@ -62,6 +62,21 @@ Function update() {
 	Set-Location -Path $currentDirectory
 }
 
+## Autosuggestions
+## Install-Module PSReadLine -RequiredVersion 2.3.5
+Import-Module PSReadLine
+
+Set-PSReadLineOption -PredictionSource History
+
+Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+
+Set-PSReadLineOption -Colors @{ InlinePrediction = '#875f5f'}
+
+
+Set-PSReadLineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
+
 ## Set tool aliases
 Set-Alias watch watch_something 
 Set-Alias find_port find_process_using_port
