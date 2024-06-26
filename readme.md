@@ -64,6 +64,10 @@ List all remote branches of the current git directory together with the author
 
 Spin up your dev environment as a docker container, either by specifying a directory e.g. `dev .` to mount the current directory into the development environment or by specifying a docker volume name such as `dev avatar`, or by entering your `REMOTE_DEV_ENV` with the `dev` command without a parameter.
 
+### dev_attach <containerId>
+
+Connect to a running dev container
+
 ### dev_create <name>
 
 Creates a new volume with the specified <name> and sets a label so that it can be easily identified as a development volume.
@@ -72,13 +76,13 @@ Creates a new volume with the specified <name> and sets a label so that it can b
 
 List all volumes with the dev tag
 
-### dev_stop
-
-Stop all running dev containers
-
 ### dev_pull
 
 Pull the latest version of the `DOCKER_DEV_ENV`
+
+### dev_stop
+
+Stop all running dev containers
 
 ### dev_tags
 
