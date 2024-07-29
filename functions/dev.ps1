@@ -29,6 +29,11 @@ if ($VolumeOrDirectory) {
 
     $zoxide = "dev-zoxide"
 
+    $tmuxResurrect = "dev-resurrect"
+    if ($mountType -eq "volume") {
+		$tmuxResurrect = $directoryOrVolume + '-resurrect'
+    }
+
 	$data = LoadConfig -Name $directoryOrVolume
 
     if ($Port -And $Port[0] -eq "null") {
@@ -99,8 +104,9 @@ if ($VolumeOrDirectory) {
     $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
+    $tmuxResurrectMount = "--mount type=volume,src=$tmuxResurrect,target=/root/.local/share/tmux/resurrect"
 
-	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount $kubeMount $ngrokMount -it ${DOCKER_DEV_ENV}${tag}"
+	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
