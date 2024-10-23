@@ -1,55 +1,57 @@
-param (	
-	[string]$VolumeOrDirectory,
-	[string[]]$Port,
+param (
+    [string]$VolumeOrDirectory,
+    [string[]]$Port,
     [string]$Tag
 )
 
 . "$PSScriptRoot/config.ps1"
 
-if ($VolumeOrDirectory) {	
-	$directoryOrVolume = $VolumeOrDirectory 
+if ($VolumeOrDirectory) {
+    $directoryOrVolume = $VolumeOrDirectory
+    $name = ""
 
-	$commandOutput = docker volume ls --format "{{.Name}}"
+    $commandOutput = docker volume ls --format "{{.Name}}"
 
-	$availableVolumes = ($commandOutput -split "/n")
-		
-	for($i=0; $i -lt $availableVolumes.length; $i++) {
-		$availableVolumes[$i] = $availableVolumes[$i].ToString().Trim()
-	}
+    $availableVolumes = ($commandOutput -split "/n")
 
-	$mountType = 'bind'
-	if ($availableVolumes -contains $directoryOrVolume) {
-		$mountType = 'volume'
-	}
+    for($i=0; $i -lt $availableVolumes.length; $i++) {
+        $availableVolumes[$i] = $availableVolumes[$i].ToString().Trim()
+    }
 
-	$history = "dev-history"
-	if ($mountType -eq "volume") {
-		$history = $directoryOrVolume + '-history'
-	}
+    $mountType = 'bind'
+    if ($availableVolumes -contains $directoryOrVolume) {
+        $mountType = 'volume'
+        $name = "--name=$directoryOrVolume"
+    }
+
+    $history = "dev-history"
+    if ($mountType -eq "volume") {
+        $history = $directoryOrVolume + '-history'
+    }
 
     $zoxide = "dev-zoxide"
 
     $tmuxResurrect = "dev-resurrect"
     if ($mountType -eq "volume") {
-		$tmuxResurrect = $directoryOrVolume + '-resurrect'
+        $tmuxResurrect = $directoryOrVolume + '-resurrect'
     }
 
-	$data = LoadConfig -Name $directoryOrVolume
+    $data = LoadConfig -Name $directoryOrVolume
 
     if ($Port -And $Port[0] -eq "null") {
-		$data.port = @()
-	} elseif ($Port -And $Port.Length -gt 0) {
-		$data.port = $Port
-	} 
-        
-	$ports = ""
+        $data.port = @()
+    } elseif ($Port -And $Port.Length -gt 0) {
+        $data.port = $Port
+    }
+
+    $ports = ""
     if ($data.port.Length -gt 0) {
-		$prefix = "-p"
+        $prefix = "-p"
         foreach ($p in $data.port) {
-		    $mapping = $p.toString() + ":" + $p.toString()	
-		    $ports = $ports + $prefix + $mapping + " " 
+            $mapping = $p.toString() + ":" + $p.toString()
+            $ports = $ports + $prefix + $mapping + " "
         }
-	}
+    }
     
     if ($Tag -AND $Tag -eq "null") {
         $data.tag = "" 
@@ -62,7 +64,7 @@ if ($VolumeOrDirectory) {
         $tag = ":$($data.tag)"
     }
 
-	SaveConfig -Data $data
+    SaveConfig -Data $data
     
     Write-Host "Starting environment with:"
     Write-Host "Ports:" $data.port
@@ -84,13 +86,13 @@ if ($VolumeOrDirectory) {
     $gpgMount = ""
     if ($GPG_DIRECTORY) {
         $gpgMount = "--mount type=bind,src=$GPG_DIRECTORY/pubring.kbx,target=/root/.gnupg/pubring.kbx --mount type=bind,src=$GPG_DIRECTORY/trustdb.gpg,target=/root/.gnupg/trustdb.gpg --mount type=bind,src=$GPG_DIRECTORY/private-keys-v1.d,target=/root/.gnupg/private-keys-v1.d"
-    } 
+    }
 
     $sharedMount = ""
     if ($SHARED_DIRECTORY) {
         $sharedMount = "--mount type=bind,src=$SHARED_DIRECTORY,target=/root/shared"
     }
-        
+
     $kubeMount = ""
     if ($KUBE_DIRECTORY) {
         $kubeMount = "--mount type=bind,src=$KUBE_DIRECTORY,target=/root/.kube"
@@ -106,20 +108,20 @@ if ($VolumeOrDirectory) {
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
     $tmuxResurrectMount = "--mount type=volume,src=$tmuxResurrect,target=/root/.local/share/tmux/resurrect"
 
-	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it ${DOCKER_DEV_ENV}${tag}"
+    Invoke-Expression "docker run ${ports} ${name} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
 } else {
-	$remotes = $REMOTE_DEV_ENV.split(",")
-	foreach ($remote in $remotes) {
-		try {	
-			Write-Host "Connecting to: $remote"
-			ssh -o ConnectTimeout=5 $remote
-		}
-		catch {
-			Write-Host "Failed to connect to: $remote"
-			<#Do this if a terminating exception happens#>
-		}
-	}
+    $remotes = $REMOTE_DEV_ENV.split(",")
+    foreach ($remote in $remotes) {
+        try {
+            Write-Host "Connecting to: $remote"
+            ssh -o ConnectTimeout=5 $remote
+        }
+        catch {
+            Write-Host "Failed to connect to: $remote"
+            <#Do this if a terminating exception happens#>
+        }
+    }
 }
