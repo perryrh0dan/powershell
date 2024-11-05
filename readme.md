@@ -64,9 +64,13 @@ List all remote branches of the current git directory together with the author
 
 Spin up your dev environment as a docker container, either by specifying a directory e.g. `dev .` to mount the current directory into the development environment or by specifying a docker volume name such as `dev avatar`, or by entering your `REMOTE_DEV_ENV` with the `dev` command without a parameter.
 
-### dev_attach <containerId>
+### dev_attach <containerId | name>
 
-Connect to a running dev container
+Connect to a running dev container.
+
+### dev_backup <name>
+
+Backup the workspace, history and zoxide directory of the given environment into a local tar archive.
 
 ### dev_create <name>
 
@@ -74,11 +78,15 @@ Creates a new volume with the specified <name> and sets a label so that it can b
 
 ### dev_list
 
-List all volumes with the dev tag
+List all volumes with the dev tag.
 
 ### dev_pull
 
-Pull the latest version of the `DOCKER_DEV_ENV`
+Pull the latest version of the `DOCKER_DEV_ENV`.
+
+### dev_restore <name> <path>
+
+Create a new dev environment and restore the workspace, history and zoxide directory from a given tar archive.
 
 ### dev_stop
 
@@ -86,7 +94,7 @@ Stop all running dev containers
 
 ### dev_tags
 
-List all local available tags of the `DOCKER_DEV_ENV`
+List all local available tags of the `DOCKER_DEV_ENV`.
 
 #### Parameters
 
