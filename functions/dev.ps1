@@ -1,10 +1,11 @@
 param (	
 	[string]$VolumeOrDirectory,
 	[string[]]$Port,
-    [string]$Tag
+  [string]$Tag
 )
 
 . "$PSScriptRoot/config.ps1"
+. "$PSScriptRoot/identities.ps1"
 
 if ($VolumeOrDirectory) {	
 	$directoryOrVolume = $VolumeOrDirectory 
@@ -75,6 +76,11 @@ if ($VolumeOrDirectory) {
     if ($SSH_DIRECTORY) {
         $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh" 
     }
+	
+	$npmMount = ""
+    if ($NPM_FILE) {
+        $npmMount = "--mount type=bind,src=$NPM_FILE,target=/root/.npmrc" 
+    }
 
     $gpgMount = ""
     if ($GPG_DIRECTORY) {
@@ -100,7 +106,16 @@ if ($VolumeOrDirectory) {
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
 
-	Invoke-Expression "docker run ${ports} --rm --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount $kubeMount $ngrokMount -it ${DOCKER_DEV_ENV}${tag}"
+    $identityEnv = ""
+    $activeIdentity = LoadActiveIdentity 
+    if($activeIdentity) {
+      $name = $activeIdentity.name
+      $email = $activeIdentity.email
+      $keyid = $activeIdentity.keyid
+      $identityEnv = "--env GIT_EMAIL=`"${email}`" --env GIT_USER=`"${name}`" --env GIT_SIGNINGKEY=`"${keyid}`""
+    }
+
+	Invoke-Expression "docker run ${ports} --privileged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $dockerMount $kubeMount $ngrokMount -it ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
