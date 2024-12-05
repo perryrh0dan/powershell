@@ -64,7 +64,9 @@ if ($VolumeOrDirectory) {
         $tag = ":$($data.tag)"
     }
 
-    SaveConfig -Data $data
+    if ($mountType -eq "bind") {
+        SaveConfig -Data $data
+    }
     
     Write-Host "Starting environment with:"
     Write-Host "Ports:" $data.port
