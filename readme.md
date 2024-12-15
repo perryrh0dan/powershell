@@ -12,24 +12,26 @@ Adds some shortcuts and usefull commands to the PowerShell
 
 ## Contents
 
--   [Description](#description)
--   [Contents](#contents)
--   [Install](#install)
--   [Usage](#usage)
-    -   [watch](#watch)
-    -   [find_port](#find_port)
-    -   [reload](#reload)
-    -   [remote_branches](#remote_branches)
-    -   [dev](#dev)
--   [Next](#next)
--   [Team](#team)
--   [License](#license)
+- [Description](#description)
+- [Contents](#contents)
+- [Install](#install)
+- [Usage](#usage)
+    - [watch](#watch)
+    - [find_port](#find_port)
+    - [reload](#reload)
+    - [remote_branches](#remote_branches)
+    - [dev](#dev)
+- [Next](#next)
+- [Team](#team)
+- [License](#license)
 
 ## Install
 
 1. Copy `PowerShell_profile.ps1` to your `$profile` path
-2. Create a `variables.ps1` file in the same directory
-3. Reload profile with `. $profile`
+2. Update windows execution policy `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+3. Create a `variables.ps1` file in the same directory
+4. Run `Install-Module PSReadLine -RequiredVersion 2.3.5` to install PSReadLine
+5. Reload profile with `. $profile`
 
 ## Usage
 
@@ -126,11 +128,11 @@ Following variables can be set in the `variables.ps1`.
 
 ## Next
 
--   [ ] Find a way to mount the docker credentials from the windows credentials manager into the docker container
+- [ ] Find a way to mount the docker credentials from the windows credentials manager into the docker container
 
 ## Team
 
--   Thomas Pöhlmann [(@perryrh0dan)](https://github.com/perryrh0dan)
+- Thomas Pöhlmann [(@perryrh0dan)](https://github.com/perryrh0dan)
 
 ## License
 
