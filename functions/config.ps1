@@ -1,4 +1,4 @@
-$path = "~/.environments.json"
+$environmentsPath = "~/.environments.json"
 
 Function SaveConfig {
     param (	
@@ -13,7 +13,7 @@ Function SaveConfig {
 
     $environments = New-Object System.Collections.ArrayList
     if ($fixedEnvironments) {
-        $environments.AddRange($fixedEnvironments)
+        $environments.Add($fixedEnvironments)
     }
 
     $indexToRemove
@@ -33,7 +33,7 @@ Function SaveConfig {
     }
 
     $jsonOutput = ConvertTo-Json @($environments) -Depth 5
-    $jsonOutput | Out-File $path
+    $jsonOutput | Out-File $environmentsPath
 }
 
 Function LoadConfig {
@@ -59,7 +59,7 @@ Function LoadConfig {
 
 Function LoadRaw { 
     try {	
-	    return Get-Content -Raw -Path $path 
+	    return Get-Content -Raw -Path $environmentsPath 
     }
     catch {
 	    return "[]"
