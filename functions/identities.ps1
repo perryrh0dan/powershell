@@ -75,8 +75,8 @@ Function SaveIdentity {
 }
 
 Function LoadRawIdentities { 
-  try {	
-    return Get-Content -Raw -Path $identitiesPath 
+  try {
+    return Get-Content -Raw -Path $identitiesPath -ErrorAction Stop
   }
   catch {
     return "[]"

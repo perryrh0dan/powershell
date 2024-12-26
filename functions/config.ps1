@@ -58,10 +58,10 @@ Function LoadConfig {
 }
 
 Function LoadRaw { 
-    try {	
-	    return Get-Content -Raw -Path $environmentsPath 
+    try {
+        return Get-Content -Raw -Path $environmentsPath -ErrorAction Stop
     }
     catch {
-	    return "[]"
+        return "[]"
     }
 }

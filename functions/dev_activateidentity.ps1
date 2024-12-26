@@ -1,5 +1,5 @@
 param(
-  [string]$email
+    [string]$email
 )
 
 . "$PSScriptRoot/identities.ps1"

@@ -112,6 +112,8 @@ The values are overridden and overwritten if a parameter is specified. To clear 
 
 Update this repository with a git pull to keep up with the latest changes.
 
+### identities
+
 ## Options
 
 Following variables can be set in the `variables.ps1`.
@@ -125,6 +127,7 @@ Following variables can be set in the `variables.ps1`.
 | SHARED_DIRECTORY | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
 | KUBE_DIRECTORY   | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
 | NGROK_DIRECTORY  | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
+| NPM_FILE         | npmrc file path                                                                                            | C:/Users/thomas/.ngrok   |
 
 ## Next
 
