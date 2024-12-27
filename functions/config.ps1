@@ -5,7 +5,6 @@ Function SaveConfig {
 	[object]$Data
     )
 
-    
     $jsonContent = LoadRaw 
 
     # Convert the JSON content to PowerShell objects
@@ -13,7 +12,8 @@ Function SaveConfig {
 
     $environments = New-Object System.Collections.ArrayList
     if ($fixedEnvironments) {
-        $environments.Add($fixedEnvironments)
+        # this will return the the index the item was added, this will get printed on stdout so we redirect it to null
+        $environments.Add($fixedEnvironments) > $null
     }
 
     $indexToRemove

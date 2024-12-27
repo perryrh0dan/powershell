@@ -6,8 +6,11 @@ param (
 
 . "$PSScriptRoot/config.ps1"
 . "$PSScriptRoot/identities.ps1"
+. "$PSScriptRoot/utils.ps1"
 
 if ($VolumeOrDirectory) {
+    Check-Docker
+
     $directoryOrVolume = $VolumeOrDirectory
     $name = ""
 
@@ -68,7 +71,7 @@ if ($VolumeOrDirectory) {
     if ($mountType -eq "bind") {
         SaveConfig -Data $data
     }
-    
+
     Write-Host "Starting environment with:"
     Write-Host "Ports:" $data.port
     Write-Host "Tag:" $data.tag
@@ -85,8 +88,8 @@ if ($VolumeOrDirectory) {
     if ($SSH_DIRECTORY) {
         $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh" 
     }
-	
-	$npmMount = ""
+
+    $npmMount = ""
     if ($NPM_FILE) {
         $npmMount = "--mount type=bind,src=$NPM_FILE,target=/root/.npmrc" 
     }
