@@ -13,7 +13,7 @@ Function SaveConfig {
     $environments = New-Object System.Collections.ArrayList
     if ($fixedEnvironments) {
         # this will return the the index the item was added, this will get printed on stdout so we redirect it to null
-        $environments.Add($fixedEnvironments) > $null
+        $environments.AddRange($fixedEnvironments) > $null
     }
 
     $indexToRemove

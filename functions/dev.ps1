@@ -68,7 +68,7 @@ if ($VolumeOrDirectory) {
         $tag = ":$($data.tag)"
     }
 
-    if ($mountType -eq "bind") {
+    if ($mountType -eq "volume") {
         SaveConfig -Data $data
     }
 
