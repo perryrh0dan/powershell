@@ -123,7 +123,12 @@ if ($VolumeOrDirectory) {
       $identityEnv = "--env GIT_EMAIL=`"${email}`" --env GIT_USER=`"${name}`" --env GIT_SIGNINGKEY=`"${keyid}`""
     }
 
-    Invoke-Expression "docker run ${ports} ${name} --priviledged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+    $llmKeys = ""
+    if ($GEMINI_API_KEY) {
+      $llmKeys = "--env GEMINI_API_KEY=`"${GEMINI_API_KEY}`""
+    }
+
+    Invoke-Expression "docker run ${ports} ${name} --priviledged --rm ${identityEnv} ${llmKeys} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
