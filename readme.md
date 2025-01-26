@@ -123,6 +123,7 @@ Following variables can be set in the `variables.ps1`.
 | SHARED_DIRECTORY | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
 | KUBE_DIRECTORY   | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
 | NGROK_DIRECTORY  | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
+| GEMINI_API_KEY   | API Key for Google Gemini                                                                                  | A1234B5678C              |
 
 ## Next
 
