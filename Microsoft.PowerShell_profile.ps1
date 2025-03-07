@@ -1,4 +1,12 @@
-. $PSScriptRoot\variables.ps1
+$variablesPath = "$PSScriptRoot\variables.ps1"
+if (Test-Path $variablesPath) {
+    . $variablesPath
+}
+
+$customScriptPath = "$PSScriptRoot\custom.ps1"
+if (Test-Path $customScriptPath) {
+    . $customScriptPath
+}
 
 ## Declare functions
 Function watch_something { 

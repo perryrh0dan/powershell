@@ -27,11 +27,12 @@ Adds some shortcuts and usefull commands to the PowerShell
 
 ## Install
 
-1. Copy `PowerShell_profile.ps1` to your `$profile` path
+1. Clone the repository into your `$profile` directory without creating a new folder `git clone https://github.com/perryrh0dan/powershell .`
 2. Update windows execution policy `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
-3. Create a `variables.ps1` file in the same directory
+3. (Optional) Create a `variables.ps1` file next to the entrypoint script
 4. Run `Install-Module PSReadLine -RequiredVersion 2.3.5` to install PSReadLine
 5. Reload profile with `. $profile`
+6. (Optional) Create a `custom.ps1` file to add custom code next to the entrypoint script
 
 ## Usage
 
