@@ -94,6 +94,11 @@ if ($VolumeOrDirectory) {
         $npmMount = "--mount type=bind,src=$NPM_FILE,target=/root/.npmrc" 
     }
 
+    $dictMount = ""
+    if ($DICT_FILE) {
+        $dictMount = "--mount type=bind,src=$DICT_FILE,target=/root/dict.txt"
+    }
+
     $gpgMount = ""
     if ($GPG_DIRECTORY) {
         $gpgMount = "--mount type=bind,src=$GPG_DIRECTORY/pubring.kbx,target=/root/.gnupg/pubring.kbx --mount type=bind,src=$GPG_DIRECTORY/trustdb.gpg,target=/root/.gnupg/trustdb.gpg --mount type=bind,src=$GPG_DIRECTORY/private-keys-v1.d,target=/root/.gnupg/private-keys-v1.d"
@@ -128,7 +133,7 @@ if ($VolumeOrDirectory) {
       $identityEnv = "--env GIT_EMAIL=`"${email}`" --env GIT_USER=`"${name}`" --env GIT_SIGNINGKEY=`"${keyid}`""
     }
 
-    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $dictMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"

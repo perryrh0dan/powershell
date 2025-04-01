@@ -129,6 +129,7 @@ Following variables can be set in the `variables.ps1`.
 | KUBE_DIRECTORY   | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
 | NGROK_DIRECTORY  | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
 | NPM_FILE         | npmrc file path                                                                                            | C:/Users/thomas/.ngrok   |
+| DICT_FILE        | dictionary file path                                                                                       | C:/Users/thomas/dict.txt |
 
 ## Next
 
