@@ -125,8 +125,12 @@ if ($VolumeOrDirectory) {
 
     $llmKeys = ""
     if ($GEMINI_API_KEY) {
-      $llmKeys = "--env GEMINI_API_KEY=`"${GEMINI_API_KEY}`""
+      $llmKeys = "${llmKeys} --env GEMINI_API_KEY=`"${GEMINI_API_KEY}`""
     }
+    if ($CLAUDE_API_KEY) {
+      $llmKeys = "${llmKeys} --env CLAUDE_API_KEY=`"${CLAUDE_API_KEY}`""
+    }
+
 
     Invoke-Expression "docker run ${ports} ${name} --priviledged --rm ${identityEnv} ${llmKeys} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 

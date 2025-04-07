@@ -124,6 +124,8 @@ Following variables can be set in the `variables.ps1`.
 | KUBE_DIRECTORY   | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
 | NGROK_DIRECTORY  | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
 | GEMINI_API_KEY   | API Key for Google Gemini                                                                                  | A1234B5678C              |
+| CLAUDE_API_KEY   | API Key for Anthropic Claude                                                                               | A1234B5678C              |
+
 
 ## Next
 
