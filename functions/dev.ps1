@@ -117,10 +117,7 @@ if ($VolumeOrDirectory) {
     $identityEnv = ""
     $activeIdentity = LoadActiveIdentity 
     if($activeIdentity) {
-      $name = $activeIdentity.name
-      $email = $activeIdentity.email
-      $keyid = $activeIdentity.keyid
-      $identityEnv = "--env GIT_EMAIL=`"${email}`" --env GIT_USER=`"${name}`" --env GIT_SIGNINGKEY=`"${keyid}`""
+      $identityEnv = "--env GIT_EMAIL=`"${activeIdentity.email}`" --env GIT_USER=`"${activeIdentity.name}`" --env GIT_SIGNINGKEY=`"${activeIdentity.keyid}`""
     }
 
     $llmKeys = ""
