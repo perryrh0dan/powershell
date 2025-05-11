@@ -16,11 +16,11 @@ Adds some shortcuts and usefull commands to the PowerShell
 - [Contents](#contents)
 - [Install](#install)
 - [Usage](#usage)
-    - [watch](#watch)
-    - [find_port](#find_port)
-    - [reload](#reload)
-    - [remote_branches](#remote_branches)
-    - [dev](#dev)
+  - [watch](#watch)
+  - [find_port](#find_port)
+  - [reload](#reload)
+  - [remote_branches](#remote_branches)
+  - [dev](#dev)
 - [Next](#next)
 - [Team](#team)
 - [License](#license)
@@ -74,6 +74,10 @@ Connect to a running dev container.
 ### dev_backup <name>
 
 Backup the workspace, history and zoxide directory of the given environment into a local tar archive.
+
+### dev_copy <name> <path>
+
+Copy the current text content from the clipboard into a file at the specified path inside the specified container.
 
 ### dev_create <name>
 

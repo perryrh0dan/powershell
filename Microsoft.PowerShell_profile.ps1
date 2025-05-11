@@ -99,6 +99,7 @@ Set-Alias pl passline
 Set-Alias -Name dev -Value "$PSScriptRoot/functions/dev.ps1"
 Set-Alias -Name dev_attach -Value "$PSScriptRoot/functions/dev_attach.ps1"
 Set-Alias -Name dev_backup -Value "$PSScriptRoot/functions/dev_backup.ps1"
+Set-Alias -Name dev_copy -Value "$PSScriptRoot/functions/dev_copy.ps1"
 Set-Alias -Name dev_create -Value "$PSScriptRoot/functions/dev_create.ps1"
 Set-Alias -Name dev_remove -Value "$PSScriptRoot/functions/dev_remove.ps1"
 Set-Alias -Name dev_list -Value "$PSScriptRoot/functions/dev_list.ps1"
