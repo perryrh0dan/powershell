@@ -74,16 +74,17 @@ Function update() {
 ## Install-Module PSReadLine -RequiredVersion 2.3.5
 Import-Module PSReadLine
 
-Set-PSReadLineOption -PredictionSource History
+if ($AUTO_COMPLETE_ENABLED) {
+  Set-PSReadLineOption -PredictionSource History
 
-Set-PSReadLineOption -HistorySearchCursorMovesToEnd
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+  Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+  Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+  Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
-Set-PSReadLineOption -Colors @{ InlinePrediction = '#875f5f'}
+  Set-PSReadLineOption -Colors @{ InlinePrediction = '#875f5f'}
 
-
-Set-PSReadLineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
+  Set-PSReadLineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
+}
 
 ## Set tool aliases
 Set-Alias watch watch_something 

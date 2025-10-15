@@ -8,7 +8,7 @@ $exitCode = $LASTEXITCODE
 if ($exitCode -eq 0) {
     $Host.UI.RawUI.WindowTitle = "dev ${ContainerId}"
 
-    docker exec -it $ContainerId /root/start.sh
+    docker exec -it $ContainerId /bin/zsh
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
