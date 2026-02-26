@@ -84,6 +84,7 @@ if ($AUTO_COMPLETE_ENABLED) {
   Set-PSReadLineOption -Colors @{ InlinePrediction = '#875f5f'}
 
   Set-PSReadLineKeyHandler -Chord "Ctrl+RightArrow" -Function ForwardWord
+  Set-PSReadLineKeyHandler -Chord "Ctrl+f" -Function AcceptSuggestion
 }
 
 ## Set tool aliases
