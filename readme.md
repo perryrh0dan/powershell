@@ -123,17 +123,19 @@ Update this repository with a git pull to keep up with the latest changes.
 
 Following variables can be set in the `variables.ps1`.
 
-| name             | description                                                                                                | example                  |
-| ---------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------ |
-| DOCKER_DEV_ENV   | docker image to use for the dev environment                                                                | registry.tpoe.dev/dev    |
-| REMOTE_DEV_ENV   | comma seperated list of 'ssh connection' strings                                                           | 192.168.0.1,192.168.0.2  |
-| SSH_DIRECTORY    | directory that include ssh keys to be used in the dev container                                            | C:/Users/thomas/.ssh     |
-| GPG_DIRECTORY    | directory that include gpg configurations                                                                  | "C:/Users/thomas/.gnupg" |
-| SHARED_DIRECTORY | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
-| KUBE_DIRECTORY   | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
-| NGROK_DIRECTORY  | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
-| NPM_FILE         | npmrc file path                                                                                            | C:/Users/thomas/.ngrok   |
-| DICT_FILE        | dictionary file path                                                                                       | C:/Users/thomas/dict.txt |
+| name                     | description                                                               | example                        |
+| ------------------------ | ------------------------------------------------------------------------- | ------------------------------ |
+| DOCKER_DEV_ENV           | docker image to use for the dev environment                               | registry.tpoe.dev/dev          |
+| REMOTE_DEV_ENV           | comma seperated list of 'ssh connection' strings                          | 192.168.0.1,192.168.0.2        |
+| SSH_DIRECTORY            | directory that include ssh keys to be used in the dev container           | C:/Users/thomas/.ssh           |
+| GPG_DIRECTORY            | directory that include gpg configurations                                 | "C:/Users/thomas/.gnupg"       |
+| SHARED_DIRECTORY         | directory that is mounted `/root/shared` to transfer data                 | "C:/Users/thomas/shared"       |
+| KUBE_DIRECTORY           | directory that include kubectl configuration                              | C:/Users/thomas/.kube          |
+| NGROK_DIRECTORY          | directory that include ngrok configuration                                | C:/Users/thomas/.ngrok         |
+| NPM_FILE                 | npmrc file path                                                           | C:/Users/thomas/.ngrok         |
+| DICT_FILE                | dictionary file path                                                      | C:/Users/thomas/dict.txt       |
+| GITHUB_COPILOT_DIRECTORY | github copilot directory path mounted into `/root/.config/github-copilot` | C:/Users/thomas/github-copilot |
+| OPENCODE_DIRECTORY       | opencode directory path mounted into `/root/.local/share/opencode`        | C:/Users/thomas/opencode       |
 
 ## Next
 
