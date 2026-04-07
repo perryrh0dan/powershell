@@ -136,6 +136,7 @@ Following variables can be set in the `variables.ps1`.
 | DICT_FILE                | dictionary file path                                                      | C:/Users/thomas/dict.txt       |
 | GITHUB_COPILOT_DIRECTORY | github copilot directory path mounted into `/root/.config/github-copilot` | C:/Users/thomas/github-copilot |
 | OPENCODE_DIRECTORY       | opencode directory path mounted into `/root/.local/share/opencode`        | C:/Users/thomas/opencode       |
+| ENV_FILE                 | file with env variables to mount into the container                       | C:/Users/thomas/.env           |
 
 ## Next
 
