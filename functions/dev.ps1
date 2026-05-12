@@ -35,6 +35,11 @@ if ($VolumeOrDirectory) {
 
     $zoxide = "dev-zoxide"
 
+    $bin = "dev-bin"
+    if ($mountType -eq "volume") {
+        $bin = $directoryOrVolume + '-bin'
+    }
+
     $tmuxResurrect = "dev-resurrect"
     if ($mountType -eq "volume") {
         $tmuxResurrect = $directoryOrVolume + '-resurrect'
@@ -143,6 +148,7 @@ if ($VolumeOrDirectory) {
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
     $tmuxResurrectMount = "--mount type=volume,src=$tmuxResurrect,target=/root/.local/share/tmux/resurrect"
+    $binMount = "--mount type=volume,src=$bin,target=/root/dev-bin"
 
     $identityEnv = ""
     $activeIdentity = LoadActiveIdentity 
@@ -153,7 +159,7 @@ if ($VolumeOrDirectory) {
       $identityEnv = "--env GIT_EMAIL=`"${email}`" --env GIT_USER=`"${name}`" --env GIT_SIGNINGKEY=`"${keyid}`""
     }
 
-    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $dictMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount $timewarriorMount $githubCopilotMount $opencodeMount $envFileMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $dictMount $gpgMount $sharedMount $historyMount $binMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount $timewarriorMount $githubCopilotMount $opencodeMount $envFileMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
