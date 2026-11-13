@@ -3,4 +3,8 @@ param (
     [string]$Path
 )
 
-Get-Clipboard | docker exec -i $Name sh -c "cat > ${Path}"
+. "$PSScriptRoot/utils.ps1"
+
+$engine = Get-ContainerEngine
+
+Get-Clipboard | & $engine exec -i $Name sh -c "cat > ${Path}"

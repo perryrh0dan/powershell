@@ -2,4 +2,8 @@ param (
 	[string]$Name
 )
 
-docker volume create --label=dev=yes $Name
+. "$PSScriptRoot/utils.ps1"
+
+$engine = Get-ContainerEngine
+
+& $engine volume create --label=dev=yes $Name

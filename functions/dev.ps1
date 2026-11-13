@@ -9,14 +9,18 @@ param (
 . "$PSScriptRoot/utils.ps1"
 
 if ($VolumeOrDirectory) {
-    Check-Docker
+    if (-not (Check-Engine)) {
+        return
+    }
+
+    $engine = Get-ContainerEngine
 
     $directoryOrVolume = $VolumeOrDirectory
     $name = ""
 
-    $commandOutput = docker volume ls --format "{{.Name}}"
+    $commandOutput = & $engine volume ls --format "{{.Name}}"
 
-    $availableVolumes = ($commandOutput -split "/n")
+    $availableVolumes = ($commandOutput -split "\r?\n")
 
     for($i=0; $i -lt $availableVolumes.length; $i++) {
         $availableVolumes[$i] = $availableVolumes[$i].ToString().Trim()
@@ -91,7 +95,8 @@ if ($VolumeOrDirectory) {
 
     $sshMount = ""
     if ($SSH_DIRECTORY) {
-        $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh" 
+        # Container init copies SSH files into its local /root/.ssh before starting the shell.
+        $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/mnt/host-ssh,readonly"
     }
 
     $npmMount = ""
@@ -149,7 +154,10 @@ if ($VolumeOrDirectory) {
         $certMount = "--mount type=bind,src=$CERT_DIRECTORY,target=/usr/local/share/ca-certificates"
     }
 
-    $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
+    # Engine socket, so the dev container can talk to the host engine.
+    # Set $MOUNT_ENGINE_SOCKET = "no" in variables.ps1 to disable it.
+    $socketMount = Get-EngineSocketMount
+
     $historyMount = "--mount type=volume,src=$history,target=/root/.history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
     $tmuxResurrectMount = "--mount type=volume,src=$tmuxResurrect,target=/root/.local/share/tmux/resurrect"
@@ -164,7 +172,11 @@ if ($VolumeOrDirectory) {
       $identityEnv = "--env GIT_EMAIL=`"${email}`" --env GIT_USER=`"${name}`" --env GIT_SIGNINGKEY=`"${keyid}`""
     }
 
+<<<<<<< HEAD
     Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $dictMount $gpgMount $sharedMount $historyMount $binMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount $timewarriorMount $githubCopilotMount $opencodeMount $envFileMount $certMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+=======
+    Invoke-Expression "${engine} run ${ports} ${name} --privileged --rm ${identityEnv} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $dictMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $socketMount $kubeMount $ngrokMount $timewarriorMount $githubCopilotMount $opencodeMount $envFileMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+>>>>>>> origin/feat/podman
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
