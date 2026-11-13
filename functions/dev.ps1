@@ -90,7 +90,8 @@ if ($VolumeOrDirectory) {
 
     $sshMount = ""
     if ($SSH_DIRECTORY) {
-        $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh" 
+        # Container init copies SSH files into its local /root/.ssh before starting the shell.
+        $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/mnt/host-ssh,readonly"
     }
 
     $npmMount = ""

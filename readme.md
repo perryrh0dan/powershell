@@ -125,13 +125,13 @@ Following variables can be set in the `variables.ps1`.
 
 | name                     | description                                                               | example                        |
 | ------------------------ | ------------------------------------------------------------------------- | ------------------------------ |
-| CONTAINER_ENGINE         | container engine to use, `docker` or `podman`, defaults to `docker`        | podman                         |
-| CONTAINER_SOCKET         | host engine socket to mount into the dev container, overrides the default  | /run/podman/podman.sock        |
-| MOUNT_ENGINE_SOCKET      | set to `no` to run without mounting the host engine socket                 | no                             |
-| DEV_UTILITY_IMAGE        | image used by `dev_backup` and `dev_restore`                              | docker.io/library/ubuntu      |
+| CONTAINER_ENGINE         | container engine to use, `docker` or `podman`, defaults to `docker`       | podman                         |
+| CONTAINER_SOCKET         | host engine socket to mount into the dev container, overrides the default | /run/podman/podman.sock        |
+| MOUNT_ENGINE_SOCKET      | set to `no` to run without mounting the host engine socket                | no                             |
+| DEV_UTILITY_IMAGE        | image used by `dev_backup` and `dev_restore`                              | docker.io/library/ubuntu       |
 | DOCKER_DEV_ENV           | docker image to use for the dev environment                               | registry.tpoe.dev/dev          |
 | REMOTE_DEV_ENV           | comma seperated list of 'ssh connection' strings                          | 192.168.0.1,192.168.0.2        |
-| SSH_DIRECTORY            | directory that include ssh keys to be used in the dev container           | C:/Users/thomas/.ssh           |
+| SSH_DIRECTORY            | host SSH directory mounted read-only at `/mnt/host-ssh`                   | C:/Users/thomas/.ssh           |
 | GPG_DIRECTORY            | directory that include gpg configurations                                 | "C:/Users/thomas/.gnupg"       |
 | SHARED_DIRECTORY         | directory that is mounted `/root/shared` to transfer data                 | "C:/Users/thomas/shared"       |
 | KUBE_DIRECTORY           | directory that include kubectl configuration                              | C:/Users/thomas/.kube          |
